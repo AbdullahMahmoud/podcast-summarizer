@@ -4,6 +4,7 @@ import json
 import os
 
 def main():
+    set_fancy_background()
     st.title("Newsletter Dashboard")
 
     available_podcast_info = create_dict_from_json_files('.')
@@ -90,11 +91,11 @@ def main():
 
         with col3:
             st.subheader("Podcast Guest")
-            st.write(podcast_info['podcast_guest']['name'])
+            st.write(podcast_info['podcast_guest'])
 
         with col4:
             st.subheader("Podcast Guest Details")
-            st.write(podcast_info["podcast_guest"]['summary'])
+            st.write(get_guest_detailes(podcast_info['podcast_guest']))
 
         # Display the five key moments
         st.subheader("Key Moments")
@@ -121,6 +122,21 @@ def process_podcast_info(url):
     f = modal.Function.lookup("corise-podcast-project", "process_podcast")
     output = f.call(url, '/content/podcast/')
     return output
+    
+def set_fancy_background():
+    st.markdown(
+        """
+        <style>
+            .stApp {
+                background-image: linear-gradient(to bottom right, #FFFFFF, #87CEEB);
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 def get_guest_detailes(guest_name):
     import wikipedia 
