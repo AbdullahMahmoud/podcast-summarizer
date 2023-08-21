@@ -46,7 +46,7 @@ def main():
 
         with col4:
             st.subheader("Podcast Guest Details")
-            st.write(podcast_info["podcast_guest"]['summary'])
+            st.write(get_guest_detailes(podcast_info['podcast_guest']))
 
         # Display the five key moments
         st.subheader("Key Moments")
@@ -122,5 +122,13 @@ def process_podcast_info(url):
     output = f.call(url, '/content/podcast/')
     return output
 
+def get_guest_detailes(guest_name):
+    import wikipedia 
+    try:
+        guest_info = wikipedia.page(guest_name, auto_suggest=False)
+        return guest_info.summary
+    except:
+        return "No detail was found about the guest!"
+    
 if __name__ == '__main__':
     main()
